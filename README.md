@@ -1,1 +1,1 @@
-![](https://github.com/KMORaza/online-scientific-calculator-app/blob/main/screenshot.jpg) 
+![](https://github.com/KMORaza/scientific-calculator-app/blob/main/screenshot.jpg) 
