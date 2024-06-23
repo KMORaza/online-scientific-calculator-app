@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scientific Calculator</title>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        background-color: #000000;
+    }
+    .calculator {
+        margin: 50px auto;
+        width: 400px;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        background-color: #000000; /* Updated background color */
+    }
+    .calculator input[type="button"] {
+        width: 50px;
+        height: 50px;
+        margin: 5px;
+        font-size: 1.2em;
+        font-family: 'Raleway', Arial, sans-serif; /* Updated font-family to Raleway */
+        background-color: #003366;
+        border: 1px solid white;
+        border-radius: 8px;
+        color: white;
+        cursor: pointer;
+    }
+    .calculator input[type="button"].number {
+        background-color: #009999;
+    }
+    .calculator input[type="text"] {
+        width: 50px;
+        margin: 5px;
+        padding: 10px;
+        font-size: 1em;
+        text-align: center;
+        box-sizing: border-box;
+    }
+    .calculator #display {
+        width: calc(100% - 12px);
+        margin-bottom: 10px;
+        padding: 10px;
+        font-size: 1.2em;
+        text-align: right;
+        box-sizing: border-box;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        background-color: black;
+        color: white;
+    }
+    .calculator .small-input {
+        width: 30px;
+        padding: 5px;
+        font-size: 0.8em;
+        font-family: 'Raleway', Arial, sans-serif;        
+        text-align: center;
+        box-sizing: border-box;
+        border: 1px solid white;
+        border-radius: 5px;
+        background-color: black;
+        color: white;
+    }
+    .calculator-button {
+        width: 50px; /* Adjust width as needed */
+        height: 50px;
+        margin: 5px;
+        font-size: 1.2em;
+        font-family: 'Raleway', Arial, sans-serif;
+        background-color: #003366;
+        border: 1px solid white;
+        border-radius: 8px;
+        color: white;
+        cursor: pointer;
+        text-align: center; /* Center text horizontally */
+        line-height: 50px; /* Center text vertically */
+    }
+
+    .developer-info-button {
+        width: auto; /* Ensures the button expands to fit the content */
+        min-width: 150px; /* Set a minimum width for the button */
+        padding: 0 15px; /* Adjust padding for better visual appearance */
+    }
+
+
+</style>
+</head>
+<body>
+
+<div class="calculator">
+    <input type="text" id="display" disabled>
+    <br>
+    <input type="button" value="7" class="number" onclick="addToDisplay('7')">
+    <input type="button" value="8" class="number" onclick="addToDisplay('8')">
+    <input type="button" value="9" class="number" onclick="addToDisplay('9')">
+    <input type="button" value="/" onclick="addToDisplay('/')">
+    <br>
+    <input type="button" value="4" class="number" onclick="addToDisplay('4')">
+    <input type="button" value="5" class="number" onclick="addToDisplay('5')">
+    <input type="button" value="6" class="number" onclick="addToDisplay('6')">
+    <input type="button" value="*" onclick="addToDisplay('*')">
+    <br>
+    <input type="button" value="1" class="number" onclick="addToDisplay('1')">
+    <input type="button" value="2" class="number" onclick="addToDisplay('2')">
+    <input type="button" value="3" class="number" onclick="addToDisplay('3')">
+    <input type="button" value="-" onclick="addToDisplay('-')">
+    <br>
+    <input type="button" value="0" class="number" onclick="addToDisplay('0')">
+    <input type="button" value="." onclick="addToDisplay('.')">
+    <input type="button" value="=" onclick="calculate()">
+    <input type="button" value="+" onclick="addToDisplay('+')">
+    <br>
+    <input type="button" value="C" onclick="clearDisplay()">
+    <input type="button" value="AC" onclick="allClear()">
+    <input type="button" value="%" onclick="calculatePercentage()">
+    <input type="button" value="log" onclick="calculateLog()">
+    <input type="text" class="small-input" id="logBase" placeholder="b">
+    <input type="button" value="ln" onclick="calculateNaturalLog()">
+    <input type="button" value="xʸ" onclick="calculatePower()">
+    <input type="text" class="small-input" id="powerExponent" placeholder="y">
+    <input type="button" value="π" onclick="addToDisplay('3.14159')">
+    <input type="button" value="eʸ" onclick="calculateExponential()">
+    <input type="text" class="small-input" id="exponentialExponent" placeholder="y">
+    <input type="button" value="sqrt" onclick="calculateSquareRoot()">
+    <input type="button" value="cbrt" onclick="calculateCubeRoot()">
+    <input type="button" value="ⁿ√" onclick="calculateNthRoot()">
+    <input type="text" class="small-input" id="rootExponent" placeholder="n">
+    <input type="button" value="x!" onclick="calculateFactorial()">
+    <input type="button" value="e" onclick="addToDisplay('Math.E')">
+    <input type="button" value="sin" onclick="calculateSin()">
+    <input type="button" value="cos" onclick="calculateCos()">
+    <input type="button" value="tan" onclick="calculateTan()">
+    <input type="button" value="sec" onclick="calculateSec()">
+    <input type="button" value="csc" onclick="calculateCsc()">
+    <input type="button" value="cot" onclick="calculateCot()">
+    <input type="button" value="asin" onclick="calculateAsin()">
+    <input type="button" value="acos" onclick="calculateAcos()">
+    <input type="button" value="atan" onclick="calculateAtan()">
+    <input type="button" value="|x|" onclick="calculateAbsolute()">
+    <input type="button" value="mod" onclick="calculateMod()">
+    <input type="button" value="φ" onclick="addToDisplay('1.61803')">
+    <input type="button" value="γ" onclick="addToDisplay('0.57721')">
+    <input type="button" value="ⁿCᵣ" onclick="calculateCombination()">
+    <input type="text" class="small-input" id="combinationN" placeholder="n">
+    <input type="text" class="small-input" id="combinationR" placeholder="r">
+    <input type="button" value="ⁿPᵣ" onclick="calculatePermutation()">
+    <input type="text" class="small-input" id="permutationN" placeholder="n">
+    <input type="text" class="small-input" id="permutationR" placeholder="r">
+    <input type="button" value="c" onclick="addToDisplay('3.00e8')">
+    <input type="button" value="√2" onclick="addToDisplay('1.414')">
+    <input type="button" value="√3" onclick="addToDisplay('1.732')">
+    <input type="button" value="√5" onclick="addToDisplay('2.236')">
+    <input type="button" value="√7" onclick="addToDisplay('2.645')">
+    <input type="button" value="√10" onclick="addToDisplay('3.162')">
+    <input type="button" value="∑n" onclick="calculateSum()">
+    <input type="text" class="small-input" id="sumNValue" placeholder="n">
+    <input type="button" value="∑n²" onclick="calculateSumOfSquares()">
+    <input type="text" class="small-input" id="sumOfSquaresNValue" placeholder="n">
+    <input type="button" value="∑n³" onclick="calculateSumOfCubes()">
+    <input type="text" class="small-input" id="sumOfCubesNValue" placeholder="n">
+    <input type="button" value="∑ⁿCᵣ" onclick="calculateSumNCr()">
+    <input type="text" class="small-input" id="sumNCrNValue" placeholder="n">
+    <input type="button" value="∑arᵏ" onclick="calculateSumArK()">
+    <input type="text" class="small-input" id="sumArKAValue" placeholder="a">
+    <input type="text" class="small-input" id="sumArKRValue" placeholder="r">
+    <input type="text" class="small-input" id="sumArKNValue" placeholder="n">
+    <input type="button" value="(∑n)²" onclick="calculateSumNSquared()">
+    <input type="text" class="small-input" id="sumNSquaredNValue" placeholder="n">
+    <input type="button" value="∑k!" onclick="calculateSumFactorials()">
+    <input type="text" class="small-input" id="sumFactorialsNValue" placeholder="n">
+    <input type="button" value="∑eᵏ" onclick="calculateSumExponentials()">
+    <input type="text" class="small-input" id="sumExponentialsNValue" placeholder="n">
+    <input type="button" value="∑kaᵏ" onclick="calculateArithmeticGeometricSeries()">
+    <input type="text" class="small-input" id="agsA" placeholder="a">
+    <input type="text" class="small-input" id="agsN" placeholder="n">
+    <input type="button" value="sinh" onclick="calculateSinh()">
+    <input type="button" value="cosh" onclick="calculateCosh()">
+    <input type="button" value="tanh" onclick="calculateTanh()">
+    <input type="button" value="sech" onclick="calculateSech()">
+    <input type="button" value="csch" onclick="calculateCsch()">
+    <input type="button" value="coth" onclick="calculateCoth()">
+    <input type="button" value="Creator Info" class="calculator-button developer-info-button" onclick="viewDeveloperInfo()">
+
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/9.5.0/math.min.js"></script>
+<script>
+// Function to add characters or functions to the display
+function addToDisplay(value) {
+    let display = document.getElementById('display');
+    display.value += value;
+}
+
+// Function to evaluate the expression in the display
+function calculate() {
+    let display = document.getElementById('display');
+    try {
+        let result = math.evaluate(display.value); // Safely evaluate expression using math.evaluate
+        display.value = result;
+    } catch (error) {
+        display.value = 'Error';
+    }
+}
+
+// Function to clear the display
+function clearDisplay() {
+    document.getElementById('display').value = '';
+}
+
+// Function to handle all clear (AC) operation
+function allClear() {
+    clearDisplay();
+}
+
+// Function to calculate percentage
+function calculatePercentage() {
+    let display = document.getElementById('display');
+    try {
+        display.value = math.evaluate(display.value + ' / 100'); // Calculate percentage using math.evaluate
+    } catch (error) {
+        display.value = 'Error';
+    }
+}
+
+// Function to calculate logarithm with a specified base
+function calculateLog() {
+    let display = document.getElementById('display');
+    let logBaseInput = document.getElementById('logBase');
+
+    try {
+        let number = parseFloat(display.value);
+        let base = parseFloat(logBaseInput.value);
+
+        if (isNaN(number) || isNaN(base) || number <= 0 || base <= 0) {
+            throw 'Invalid input';
+        }
+
+        display.value = math.log(number, base); // Calculate logarithm using math.log
+    } catch (error) {
+        display.value = 'Error';
+    }
+}
+
+// Function to calculate natural logarithm (ln)
+function calculateNaturalLog() {
+    let display = document.getElementById('display');
+    try {
+        display.value = math.log(math.evaluate(display.value)); // Calculate natural logarithm using math.log
+    } catch (error) {
+        display.value = 'Error';
+    }
+}
+
+// Function to calculate power
+function calculatePower() {
+    let display = document.getElementById('display');
+    let powerExponent = document.getElementById('powerExponent');
+    try {
+        let base = parseFloat(display.value);
+        let exponent = parseFloat(powerExponent.value);
+
+        if (isNaN(base) || isNaN(exponent)) {
+            throw 'Invalid input';
+        }
+
+        display.value = math.pow(base, exponent); // Calculate power using math.pow
+    } catch (error) {
+        display.value = 'Error';
+    }
+}
+
+// Function to calculate square root
+function calculateSquareRoot() {
+    let display = document.getElementById('display');
+    try {
+        display.value = math.sqrt(math.evaluate(display.value)); // Calculate square root using math.sqrt
+    } catch (error) {
+        display.value = 'Error';
+    }
+}
+
+// Function to calculate cube root
+function calculateCubeRoot() {
+    let display = document.getElementById('display');
+    try {
+        display.value = math.cbrt(math.evaluate(display.value)); // Calculate cube root using math.cbrt
+    } catch (error) {
+        display.value = 'Error';
+    }
+}
+
+// Function to calculate nth root
+function calculateNthRoot() {
+    let display = document.getElementById('display');
+    let rootExponent = document.getElementById('rootExponent');
+    try {
+        let value = parseFloat(display.value);
+        let root = parseFloat(rootExponent.value);
+
+        if (isNaN(value) || isNaN(root) || root <= 0) {
+            throw 'Invalid input';
+        }
+
+        display.value = math.nthRoot(value, root); // Calculate nth root using math.nthRoot
+    } catch (error) {
+        display.value = 'Error';
+    }
+}
+
+// Function to calculate factorial
+function calculateFactorial() {
+    let display = document.getElementById('display');
+    try {
+        let num = parseInt(display.value);
+
+        if (isNaN(num) || num < 0) {
+            throw 'Invalid input';
+        }
+
+        let result = math.factorial(num); // Calculate factorial using math.factorial
+        display.value = result;
+    } catch (error) {
+        display.value = 'Error';
+    }
+}
+
+// Function to calculate sine
+function calculateSin() {
+    let display = document.getElementById('display');
+    try {
+        let degrees = math.evaluate(display.value);
+        let radians = math.unit(degrees, 'deg').toNumber('rad');
+        display.value = math.sin(radians); // Calculate sine using math.sin
+    } catch (error) {
+        display.value = 'Error';
+    }
+}
+
+// Function to calculate cosine
+function calculateCos() {
+    let display = document.getElementById('display');
+    try {
+        let degrees = math.evaluate(display.value);
+        let radians = math.unit(degrees, 'deg').toNumber('rad');
+        display.value = math.cos(radians); // Calculate cosine using math.cos
+    } catch (error) {
+        display.value = 'Error';
+    }
+}
+
+// Function to calculate tangent
+function calculateTan() {
+    let display = document.getElementById('display');
+    try {
+        let degrees = math.evaluate(display.value);
+        let radians = math.unit(degrees, 'deg').toNumber('rad');
+        display.value = math.tan(radians); // Calculate tangent using math.tan
+    } catch (error) {
+        display.value = 'Error';
+    }
+}
+
+// Function to calculate secant
+function calculateSec() {
+    let display = document.getElementById('display');
+    try {
+        let degrees = math.evaluate(display.value);
+        let radians = math.unit(degrees, 'deg').toNumber('rad');
+        display.value = 1 / math.cos(radians); // Calculate secant
+    } catch (error) {
+        display.value = 'Error';
+    }
+}
+
+// Function to calculate cosecant
+function calculateCsc() {
+    let display = document.getElementById('display');
+    try {
+        let degrees = math.evaluate(display.value);
+        let radians = math.unit(degrees, 'deg').toNumber('rad');
+        display.value = 1 / math.sin(radians); // Calculate cosecant
+    } catch (error) {
+        display.value = 'Error';
+    }
+}
+
+// Function to calculate cotangent
+function calculateCot() {
+    let display = document.getElementById('display');
+    try {
+        let degrees = math.evaluate(display.value);
+        let radians = math.unit(degrees, 'deg').toNumber('rad');
+        display.value = 1 / math.tan(radians); // Calculate cotangent
+    } catch (error) {
+        display.value = 'Error';
+    }
+}
+
+// Function to calculate arcsine
+function calculateAsin() {
+    let display = document.getElementById('display');
+    try {
+        let value = math.evaluate(display.value);
+        if (value < -1 || value > 1) {
+            throw 'Invalid input';
+        }
+        display.value = math.asin(value) * (180 / Math.PI); // Calculate arcsine
+    } catch (error) {
+        display.value = 'Error';
+    }
+}
+
+// Function to calculate arccosine
+function calculateAcos() {
+    let display = document.getElementById('display');
+    try {
+        let value = math.evaluate(display.value);
+        if (value < -1 || value > 1) {
+            throw 'Invalid input';
+        }
+        display.value = math.acos(value) * (180 / Math.PI); // Calculate arccosine
+    } catch (error) {
+        display.value = 'Error';
+    }
+}
+
+// Function to calculate arctangent
+function calculateAtan() {
+    let display = document.getElementById('display');
+    try {
+        display.value = math.atan(math.evaluate(display.value)) * (180 / Math.PI); // Calculate arctangent
+    } catch (error) {
+        display.value = 'Error';
+    }
+}
+
+// Function to calculate absolute value
+function calculateAbsolute() {
+    let display = document.getElementById('display');
+    try {
+        display.value = math.abs(math.evaluate(display.value)); // Calculate absolute value
+    } catch (error) {
+        display.value = 'Error';
+    }
+}
+
+// Function to calculate modulus
+function calculateMod() {
+    let display = document.getElementById('display');
+    try {
+        let value = math.evaluate(display.value);
+        display.value = math.mod(value, 1) === 0 ? value : value.toFixed(2); // Calculate modulus
+    } catch (error) {
+        display.value = 'Error';
+    }
+}
+
+// Function to calculate combination (nCr)
+function calculateCombination() {
+    let display = document.getElementById('display');
+    let nInput = document.getElementById('combinationN');
+    let rInput = document.getElementById('combinationR');
+
+    try {
+        let n = parseInt(nInput.value);
+        let r = parseInt(rInput.value);
+
+        if (isNaN(n) || isNaN(r) || n < r || n < 0 || r < 0) {
+            throw 'Invalid input';
+        }
+
+        let result = math.combinations(n, r); // Calculate combination using math.combinations
+        display.value = result;
+    } catch (error) {
+        display.value = 'Error';
+    }
+}
+
+// Function to calculate permutation (nPr)
+function calculatePermutation() {
+    let display = document.getElementById('display');
+    let nInput = document.getElementById('permutationN');
+    let rInput = document.getElementById('permutationR');
+
+    try {
+        let n = parseInt(nInput.value);
+        let r = parseInt(rInput.value);
+
+        if (isNaN(n) || isNaN(r) || n < r || n < 0 || r < 0) {
+            throw 'Invalid input';
+        }
+
+        let result = math.permutations(n, r); // Calculate permutation using math.permutations
+        display.value = result;
+    } catch (error) {
+        display.value = 'Error';
+    }
+}
+
+// Function to calculate exponential
+function calculateExponential() {
+    let display = document.getElementById('display');
+    let exponentialExponent = document.getElementById('exponentialExponent');
+    try {
+        let exponent = parseFloat(exponentialExponent.value);
+
+        if (isNaN(exponent)) {
+            throw 'Invalid input';
+        }
+
+        display.value = math.exp(exponent); // Calculate exponential using math.exp
+    } catch (error) {
+        display.value = 'Error';
+    }
+}
+    // Function to calculate sum of first n natural numbers
+    function calculateSum() {
+        let nInput = document.getElementById('sumNValue');
+        let display = document.getElementById('display');
+
+        try {
+            let n = parseInt(nInput.value);
+
+            if (isNaN(n) || n <= 0) {
+                throw 'Invalid input';
+            }
+
+            let sum = n * (n + 1) / 2; // Sum formula for first n natural numbers
+            display.value = sum;
+        } catch (error) {
+            display.value = 'Error';
+        }
+    }
+    // Function to calculate sum of squares of first n natural numbers
+    function calculateSumOfSquares() {
+        let nInput = document.getElementById('sumOfSquaresNValue');
+        let display = document.getElementById('display');
+
+        try {
+            let n = parseInt(nInput.value);
+
+            if (isNaN(n) || n <= 0) {
+                throw 'Invalid input';
+            }
+
+            let sumOfSquares = n * (n + 1) * (2 * n + 1) / 6; // Sum of squares formula for first n natural numbers
+            display.value = sumOfSquares;
+        } catch (error) {
+            display.value = 'Error';
+        }
+    }
+    // Function to calculate sum of cubes of first n natural numbers
+    function calculateSumOfCubes() {
+        let nInput = document.getElementById('sumOfCubesNValue');
+        let display = document.getElementById('display');
+
+        try {
+            let n = parseInt(nInput.value);
+
+            if (isNaN(n) || n <= 0) {
+                throw 'Invalid input';
+            }
+
+            let sumOfCubes = Math.pow(n * (n + 1) / 2, 2); // Sum of cubes formula for first n natural numbers
+            display.value = sumOfCubes;
+        } catch (error) {
+            display.value = 'Error';
+        }
+    }
+    // Function to calculate sum of binomial coefficients 2^n
+    function calculateSumNCr() {
+        let nInput = document.getElementById('sumNCrNValue');
+        let display = document.getElementById('display');
+
+        try {
+            let n = parseInt(nInput.value);
+
+            if (isNaN(n) || n < 0) {
+                throw 'Invalid input';
+            }
+
+            let result = Math.pow(2, n); // Calculating 2^n
+            display.value = result;
+        } catch (error) {
+            display.value = 'Error';
+        }
+    }
+    // Function to calculate sum of geometric series ar^k
+    function calculateSumArK() {
+        let aValue = parseFloat(document.getElementById('sumArKAValue').value);
+        let rValue = parseFloat(document.getElementById('sumArKRValue').value);
+        let nValue = parseInt(document.getElementById('sumArKNValue').value);
+        let display = document.getElementById('display');
+
+        try {
+            if (isNaN(aValue) || isNaN(rValue) || isNaN(nValue) || nValue < 0) {
+                throw 'Invalid input';
+            }
+
+            if (rValue === 1) {
+                display.value = aValue * (nValue + 1); // Handle special case when r = 1
+            } else {
+                let sum = aValue * (1 - Math.pow(rValue, nValue + 1)) / (1 - rValue); // Formula for sum of geometric series
+                display.value = sum;
+            }
+        } catch (error) {
+            display.value = 'Error';
+        }
+    }
+    // Function to calculate (sum of first n natural numbers)^2
+    function calculateSumNSquared() {
+        let nValue = parseInt(document.getElementById('sumNSquaredNValue').value);
+        let display = document.getElementById('display');
+
+        try {
+            if (isNaN(nValue) || nValue <= 0) {
+                throw 'Invalid input';
+            }
+
+            // Calculate (sum of first n natural numbers)^2 using the formula (n(n + 1) / 2)^2
+            let sum = (nValue * (nValue + 1) / 2) ** 2;
+
+            display.value = sum.toFixed(10); // Display result with high precision
+        } catch (error) {
+            display.value = 'Error';
+        }
+    }
+    // Function to calculate sum of factorials from 1 to n
+    function calculateSumFactorials() {
+        let nValue = parseInt(document.getElementById('sumFactorialsNValue').value);
+        let display = document.getElementById('display');
+
+        try {
+            if (isNaN(nValue) || nValue < 0) {
+                throw 'Invalid input';
+            }
+
+            // Calculate sum of factorials from 1 to n
+            let sum = 0;
+            for (let k = 1; k <= nValue; k++) {
+                sum += math.factorial(k);
+            }
+
+            display.value = sum;
+        } catch (error) {
+            display.value = 'Error';
+        }
+    }
+    // Function to calculate sum of exponentials from e^1 to e^n
+    function calculateSumExponentials() {
+        let nValue = parseInt(document.getElementById('sumExponentialsNValue').value);
+        let display = document.getElementById('display');
+
+        try {
+            if (isNaN(nValue) || nValue <= 0) {
+                throw 'Invalid input';
+            }
+
+            // Calculate sum of exponentials from e^1 to e^n
+            let sum = 0;
+            for (let k = 1; k <= nValue; k++) {
+                sum += Math.exp(k);
+            }
+
+            display.value = sum.toFixed(10); // Display result with high precision
+        } catch (error) {
+            display.value = 'Error';
+        }
+    }
+    // Function to calculate Arithmetic-Geometric Series (AGS) ∑k * a^k
+    function calculateArithmeticGeometricSeries() {
+        let a = parseFloat(document.getElementById('agsA').value);
+        let n = parseInt(document.getElementById('agsN').value);
+        let display = document.getElementById('display');
+
+        try {
+            if (isNaN(a) || isNaN(n) || n <= 0) {
+                throw 'Invalid input';
+            }
+
+            // Calculate sum of Arithmetic-Geometric Series (AGS)
+            let sum = 0;
+            for (let k = 1; k <= n; k++) {
+                sum += k * Math.pow(a, k);
+            }
+
+            display.value = sum.toFixed(10); // Display result with high precision
+        } catch (error) {
+            display.value = 'Error';
+        }
+    }
+    // Function to calculate hyperbolic sine (sinh)
+    // Function to calculate hyperbolic sine (sinh)
+    function calculateSinh() {
+        let display = document.getElementById('display');
+
+        try {
+            let degrees = math.evaluate(display.value);
+            let radians = math.unit(degrees, 'deg').toNumber('rad'); // Convert degrees to radians
+            display.value = math.sinh(radians); // Calculate hyperbolic sine using math.sinh
+        } catch (error) {
+            display.value = 'Error';
+        }
+    }
+
+    // Function to calculate hyperbolic cosine (cosh)
+    // Function to calculate hyperbolic cosine (cosh)
+function calculateCosh() {
+    let display = document.getElementById('display');
+
+    try {
+        let degrees = math.evaluate(display.value);
+        let radians = math.unit(degrees, 'deg').toNumber('rad'); // Convert degrees to radians
+        display.value = math.cosh(radians); // Calculate hyperbolic cosine using math.cosh
+    } catch (error) {
+        display.value = 'Error';
+    }
+}
+
+    // Function to calculate hyperbolic tangent (tanh)
+    // Function to calculate hyperbolic tangent (tanh)
+    function calculateTanh() {
+        let display = document.getElementById('display');
+
+        try {
+            let degrees = math.evaluate(display.value);
+            let radians = math.unit(degrees, 'deg').toNumber('rad'); // Convert degrees to radians
+            display.value = math.tanh(radians); // Calculate hyperbolic tangent using math.tanh
+        } catch (error) {
+            display.value = 'Error';
+        }
+    }
+    // Function to calculate hyperbolic secant (sech)
+    function calculateSech() {
+        let display = document.getElementById('display');
+
+        try {
+            let degrees = math.evaluate(display.value);
+            let radians = math.unit(degrees, 'deg').toNumber('rad'); // Convert degrees to radians
+            let coshValue = math.cosh(radians);
+
+            // Calculate hyperbolic secant
+            let sechValue = 1 / coshValue;
+
+            display.value = sechValue; // Update display with sechValue
+        } catch (error) {
+            display.value = 'Error';
+        }
+    }
+    // Function to calculate hyperbolic cosecant (csch)
+    function calculateCsch() {
+        let display = document.getElementById('display');
+
+        try {
+            let degrees = math.evaluate(display.value);
+            let radians = math.unit(degrees, 'deg').toNumber('rad'); // Convert degrees to radians
+            let sinhValue = math.sinh(radians);
+
+            // Calculate hyperbolic cosecant
+            let cschValue = 1 / sinhValue;
+
+            display.value = cschValue; // Update display with cschValue
+        } catch (error) {
+            display.value = 'Error';
+        }
+    }
+    // Function to calculate hyperbolic cotangent (coth)
+    function calculateCoth() {
+        let display = document.getElementById('display');
+
+        try {
+            let degrees = math.evaluate(display.value);
+            let radians = math.unit(degrees, 'deg').toNumber('rad'); // Convert degrees to radians
+            let sinhValue = math.sinh(radians);
+            let coshValue = math.cosh(radians);
+
+            // Calculate hyperbolic cotangent
+            let cothValue = coshValue / sinhValue;
+
+            display.value = cothValue; // Update display with cothValue
+        } catch (error) {
+            display.value = 'Error';
+        }
+    }
+    // Function to open developer info link
+    function viewDeveloperInfo() {
+        window.open('https://github.com/KMORaza', '_blank');
+    }
+
+</script>
+
+</body>
+</html>
